@@ -1,0 +1,79 @@
+class ScoreCollision : ZilchComponent
+{
+    var TheLauncher : BlockLauncher;
+
+    // this property contains the object that will be created
+    // when the player collides with a score block
+    [Property]
+    var ScorePopup : Archetype = Archetype.ScorePopup;
+
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.TheLauncher = this.LevelSettings.GameManager.TheLauncher;
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollisionStarted);   
+    }
+
+    function OnCollisionStarted(event : CollisionEvent)
+    {
+       
+        
+        //checks what object did collision
+        var otherObj = event.OtherObject;
+        
+        //checks if each blocks collided
+        var scoreChecked = false;
+        
+        if (scoreChecked == false)
+        {
+      
+            if (otherObj.Wall != null)
+             {
+           
+                
+                //stops block in place
+                this.Owner.RigidBody.Kinematic = true;
+                
+                //checks if block is collided
+                scoreChecked = true;
+                
+                //destroys scoreBlock
+                this.Owner.Destroy();
+             }
+        
+            if (otherObj.BlockCollision != null)
+            {
+                //checks if block is collided
+                scoreChecked = true; 
+                
+               
+            }
+            
+              if (otherObj.ScoreCollision != null)// if crash into another of this object (this is ghosted)
+            {
+                //checks if block is collided
+                scoreChecked = true; 
+                
+          
+                //destroys scoreBlock
+                this.Owner.Destroy();
+            }
+            
+            if (otherObj.PlayerMovement != null)
+           {
+                this.TheLauncher.Totalscore += 10;
+                this.TheLauncher.Clearscreen += 1;
+                
+                //checks if block is collided
+                scoreChecked = true;
+                
+                //create a score popup at the player's position
+                this.Space.CreateAtPosition(this.ScorePopup, this.Space.FindObjectByName("Player").Transform.Translation);
+                
+                //destroys scoreBlock
+                this.Owner.Destroy();
+           
+           }    
+    }   }
+}
+

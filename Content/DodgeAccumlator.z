@@ -1,0 +1,77 @@
+class DodgeAccumlator : ZilchComponent
+{
+    var Tally : BlockCollision;
+    var TheLauncher : BlockLauncher;
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.TheLauncher = this.LevelSettings.GameManager.TheLauncher;
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {  
+        //Calls the block launcher script
+        var blockfinder = this.Space.FindObjectByName("Block");
+        
+        //checks how many blocks are dodged
+        var blocksdodged: Integer = 0;
+        
+        blocksdodged = this.TheLauncher.Clearscreen;
+        
+       
+        
+        if(blocksdodged == 0)
+        this.Owner.SpriteText.Text = " ";
+        
+        if(blocksdodged == 1)
+        {
+            this.Owner.SpriteText.Text = "";
+            this.Space.FindObjectByName("DodgeBar1").Sprite.Visible = true;
+        }
+        
+        if(blocksdodged == 2)
+        {
+            this.Owner.SpriteText.Text = "";
+            this.Space.FindObjectByName("DodgeBar2").Sprite.Visible = true;
+        }
+        
+        if(blocksdodged == 3)
+        {
+            this.Owner.SpriteText.Text = "";
+            this.Space.FindObjectByName("DodgeBar3").Sprite.Visible = true;
+        }
+        
+        if(blocksdodged == 4)
+        {
+            this.Owner.SpriteText.Text = ""; 
+            this.Space.FindObjectByName("DodgeBar4").Sprite.Visible = true;
+        }
+        
+        if(blocksdodged == 5)
+        {
+            this.Owner.SpriteText.Text = "";
+            this.Space.FindObjectByName("DodgeBar5").Sprite.Visible = true;
+        }
+        
+        if(blocksdodged == 6)
+        {
+            this.Owner.SpriteText.Text = "     Ready!"; 
+            this.Space.FindObjectByName("DodgeBar6").Sprite.Visible = true;
+        }
+        
+        if (blocksdodged >= 6 && Zero.Keyboard.KeyIsPressed(Keys.S))
+        {
+            if (blockfinder.BlockCollision.BlockChecked == false)
+            {
+               //destroys all blocks that are kinematic
+               blockfinder.BlockCollision.Owner.Destroy(); 
+               
+               //resets count
+               this.TheLauncher.Clearscreen = 0;
+                    
+            }
+        }
+       
+    }
+}

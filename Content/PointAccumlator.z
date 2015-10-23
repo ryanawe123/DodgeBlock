@@ -1,0 +1,17 @@
+class PointAccumlator : ZilchComponent
+{
+     var Tally : BlockCollision;
+    var TheLauncher : BlockLauncher;
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.TheLauncher = this.LevelSettings.GameManager.TheLauncher;
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        this.Owner.SpriteText.Text = "`this.TheLauncher.Totalscore`";
+        
+    }
+}

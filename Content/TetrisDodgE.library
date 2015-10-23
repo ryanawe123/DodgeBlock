@@ -1,0 +1,7 @@
+ContentLibrary = 
+{
+	string Name = "TetrisDodgE",
+	uint64 LibraryId = 56780a2a7cd438a6,
+	string SourceControlType = "",
+	bool ReadOnly = false,
+},

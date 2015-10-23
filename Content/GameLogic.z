@@ -1,0 +1,42 @@
+class GameLogic : ZilchComponent
+{
+    //variables for levels
+    [Property]
+    var Level1: Level = Level.Find("Title");
+    [Property]
+    var Level2: Level = Level.Find("Level");
+    [Property]
+    var Level3: Level = Level.Find("GameOver");
+    
+    function Initialize(init : CogInitializer)
+    {
+        // Connect to Keyboard events.
+        Zero.Connect(Zero.Keyboard, Events.KeyUp, this.OnKeyUp);
+    }
+    
+    function OnKeyUp(event : KeyboardEvent)
+    {
+        // reload the level.
+   
+        // If we press the right arrow:
+        if (event.Key == Keys.Space)
+        {
+            // Get the name of the currently loaded level:
+            var currentLevelName = this.Space.CurrentLevel;
+
+            // If we are on Level1,
+            if (currentLevelName == this.Level1)
+            {
+                // switch to Level2.
+                this.Space.LoadLevel(this.Level2);
+            }
+            
+             // If we are on Level3,
+            if (currentLevelName == this.Level3)
+            {
+                // switch to Level2.
+                this.Space.LoadLevel(this.Level1);
+            }
+        }
+    }
+}

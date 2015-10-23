@@ -1,0 +1,28 @@
+class BlockGroupInitializer : ZilchComponent
+{
+    [Property]
+    var Child0 : CogPath;
+    [Property]
+    var Child1 : CogPath;
+    [Property]
+    var Child2 : CogPath;
+    [Property]
+    var Child3 : CogPath;
+    [Property]
+    var Child4 : CogPath;
+    [Property]
+    var Child5 : CogPath;
+    [Property]
+    var Child6 : CogPath;
+
+    function InitVel(vel : Real3)
+    {
+        this.Child0.DirectCog.RigidBody.Velocity = vel;
+        this.Child1.DirectCog.RigidBody.Velocity = vel;
+        this.Child2.DirectCog.RigidBody.Velocity = vel;
+        this.Child3.DirectCog.RigidBody.Velocity = vel;
+        this.Child4.DirectCog.RigidBody.Velocity = vel;
+        this.Child5.DirectCog.RigidBody.Velocity = vel;
+        this.Child6.DirectCog.RigidBody.Velocity = vel;
+    }
+}

@@ -1,0 +1,68 @@
+class PlayerMovement : ZilchComponent
+{
+[Dependency]
+var RigidBody:RigidBody;
+        
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        //variabble adjusts player animation
+        var timer = 0;
+        
+        //controls player movement
+        var movement = Real3(0.0, 0.0, 0.0);
+    
+            
+             
+        var vel = this.RigidBody.Velocity;
+            
+        //pushes player down to simulate gravity
+        vel.Y+= -30.0 *event.Dt;
+        this.RigidBody.Velocity = vel;
+            
+     
+        
+        // control left, right, and up + down
+        if(Zero.Keyboard.KeyIsDown(Keys.A))
+        {
+            this.Owner.Sprite.FlipX = true;
+            vel = this.RigidBody.Velocity;
+             vel.X = -5;
+            this.RigidBody.Velocity = vel;
+        }
+
+        if(Zero.Keyboard.KeyIsDown(Keys.D))
+        {
+            this.Owner.Sprite.FlipX = false;
+             vel = this.RigidBody.Velocity;
+             vel. X = 5;
+            this.RigidBody.Velocity = vel;
+        }
+        
+        if(Zero.Keyboard.KeyIsPressed(Keys.W) )
+        {
+           
+            
+            timer = 5;
+            vel = this.RigidBody.Velocity;
+            vel.Y = 10;
+            this.RigidBody.Velocity = vel;
+        }
+       
+        // probably don't need a down so it's removed for now
+        //if(Zero.Keyboard.KeyIsPressed(Keys.S))
+        //{
+        //    this.Owner.Sprite.SpriteSource = SpriteSource.Duck1; 
+        //     vel = this.RigidBody.Velocity;
+        //     vel.Y+=-1;
+        //    this.RigidBody.Velocity = vel;
+        //}
+        
+       
+    }
+
+}

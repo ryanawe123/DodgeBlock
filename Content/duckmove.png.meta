@@ -1,0 +1,20 @@
+ImageContent = 
+{
+	SpriteSourceBuilder = 
+	{
+		string Name = "duckmove",
+		uint64 ResourceId = 565d6cd7da02e66c,
+		uint64 AtlasId = 5274cf95e4a661fd,
+		uint FrameSizeX = 50,
+		uint FrameSizeY = 39,
+		uint FrameCount = 2,
+		float FrameDelay = 0.333333,
+		float OriginX = 25,
+		float OriginY = 19,
+		float PixelsPerUnit = 32,
+		bool Smoothing = false,
+		bool Looping = true,
+		Vec4 Slices = [0, 0, 0, 0],
+		SpriteFill Fill = Stretch,
+	},
+},

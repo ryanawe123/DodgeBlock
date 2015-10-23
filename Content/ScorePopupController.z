@@ -1,0 +1,64 @@
+class ScorePopupController : ZilchComponent
+{
+    // contains the number of points that the 
+    // score popup displays
+    [Property]
+    var PointsValue : Integer;
+    
+    // contains a real which determines how long
+    // the score popup will stay on screen
+    [Property]
+    var LifeTime : Real;
+    
+    // contains the amount of time the score popup
+    // has exsisted
+    [Property]
+    var Timer: Real;
+    
+    // contains the base font size of the score popup
+    [Property]
+    var Size: Integer;
+    
+    //contains the initial velocity of the score popup
+    [Property]
+    var CurrentVelocity: Real3 = Real3(0, 14, 0);
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        
+        // change the font size based on the value of the popup
+        //
+        // Designer's note: this feature exsists only to make
+        // larger scores feel more exciting. If it doesn't work,
+        // feel free to remove or change it.
+        this.Owner.SpriteText.FontSize = this.Size + this.PointsValue;
+        
+        // set the text to the point value of the player's action
+        this.Owner.SpriteText.Text = "`this.PointsValue`";
+        
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        // set/update the velocity of the score popup
+        this.Owner.RigidBody.Velocity = this.CurrentVelocity;
+        
+        // update the timer
+        this.Timer += event.Dt;
+        
+        // gradualy decrease the velocity of the 
+        // score popup until it comes to a stop
+        if (this.CurrentVelocity.Y > 0)
+        {
+            this.CurrentVelocity.Y -= 1;
+        }
+        
+        // make the score popup dissapear when its
+        // lifetime is up
+        if (this.Timer >= this.LifeTime)
+        {
+            this.Owner.Destroy();
+        }
+    }
+}

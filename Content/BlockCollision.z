@@ -1,0 +1,66 @@
+class BlockCollision : ZilchComponent
+{
+    [Dependency]
+    var RigidBody : RigidBody;
+    //reloads when each block touches the next
+    var Reload : Boolean = false;
+    
+    //checks if each blocks collided
+    var BlockChecked : Boolean = true;
+    
+    var TheLauncher : BlockLauncher;
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.TheLauncher = this.LevelSettings.GameManager.TheLauncher;
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollisionStarted);
+    }
+
+         function OnCollisionStarted(event : CollisionEvent)
+    {   
+        //checks what object did collision
+        var otherObj = event.OtherObject;       
+        
+        if (this.BlockChecked == true)
+        {
+            if (otherObj.Wall != null)
+             {
+                //fires another block
+                this.TheLauncher.Reload = true;
+                
+                //checks if block made contact
+                this.BlockChecked = false;
+    
+                //stops block in place
+                this.Owner.RigidBody.Kinematic = true;
+             }
+        
+            if (otherObj.BlockCollision != null)
+            {
+             //fires another block
+                this.TheLauncher.Reload = true;
+                
+                //checks if block made contact
+               this.BlockChecked= false;
+    
+                //stops block in place
+                this.Owner.RigidBody.Kinematic = true;
+            }
+           
+           if (otherObj.BlockLauncher != null)
+          {
+            this.Owner.Destroy();
+          }
+        
+         if (otherObj.PlayerMovement != null)
+         {
+            this.Space.LoadLevel(this.LevelSettings.GameManager.Level_GameOver);
+            Console.WriteLine("Ouch");
+         }
+        }
+        
+        
+    }
+        
+        
+}

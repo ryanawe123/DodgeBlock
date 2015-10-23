@@ -1,0 +1,86 @@
+class BlockLauncher : ZilchComponent
+{
+        [Property]
+        var BlockGroup0 : Archetype;
+        [Property]
+        var BlockGroup1 : Archetype;
+        [Property]
+        var BlockGroup2 : Archetype;
+        //variables for bullets
+        var Bullet :  Archetype = Archetype.Block;
+        var ScoreBullet :  Archetype = Archetype.ScoreBullet;
+         
+         //functions to record score and meter
+        var Totalscore : Integer = 0;
+        var Clearscreen: Integer = 0;
+        
+        [Property]
+        var BulletVelocity : Real3 = Real3(10.0,0.0,0.0);
+        [Property]
+        var BlockSpawnPosition : Real3 = Real3(-11.769,0.0,0.0);
+        
+        var SpawnedBlocks : Array[Cog] = Array[Cog]();
+        
+        // controls reload time for blocks
+        var Reload : Boolean = true;  
+        
+        //picks the location blocks will shoot
+        var SelectArea: Random = Random();
+        
+        //timer for the block
+        var BlockTimer : Real = 15;
+        
+        
+        function Initialize(init : CogInitializer)
+        {
+            Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+            
+        }
+
+        function OnLogicUpdate(event : UpdateEvent)
+        {
+                if (this.BlockTimer <= 0)
+                {
+                    Console.WriteLine(123);
+                    this.ShootBullet();
+                }
+                
+                this.BlockTimer-=1;
+        }   
+        
+     
+        function ShootBullet()
+        {
+                if(this.Reload == true)
+                {
+                    //variables control block shooting location
+                    //@postion = defualt postion of luancher
+                    //@select = random number gen for location luanched
+                    //@location = is a modifier for location so that blocks shoot along origin axis
+                    //@pickShape = picks the block shape -> not in use
+                    
+                    var select = this.SelectArea.DieRoll(2);
+                    
+                    var location = this.SelectArea.RangeExclusiveMax(0,3);
+                    var pickShape = 1;
+                    var arToSpawn : Archetype = this.BlockGroup0;
+                    if(select == 1)
+                    {
+                        arToSpawn = this.BlockGroup1;
+                    }
+                    else if(select == 2)
+                    {
+                        arToSpawn = this.BlockGroup2;
+                    }
+                    var spawned = this.Space.CreateAtPosition(arToSpawn,this.BlockSpawnPosition);
+                    spawned.BlockGroupInitializer.InitVel(this.BulletVelocity);
+                    this.SpawnedBlocks.Add(spawned);
+                    
+                    this.Reload = false;
+                }
+                
+            this.BlockTimer = 150;
+         }
+    
+    }
+

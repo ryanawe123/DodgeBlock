@@ -1,0 +1,4 @@
+class Wall : ZilchComponent
+{
+    //This is a tag to be used in BlockCollision, pls do not remove.
+}

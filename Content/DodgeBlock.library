@@ -1,0 +1,7 @@
+ContentLibrary = 
+{
+	string Name = "DodgeBlock",
+	uint64 LibraryId = 567575cf75afd775,
+	string SourceControlType = "",
+	bool ReadOnly = false,
+},

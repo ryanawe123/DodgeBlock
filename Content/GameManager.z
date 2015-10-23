@@ -1,0 +1,19 @@
+class GameManager : ZilchComponent
+{
+    [Property]
+    var Level_GameOver : Level;
+    
+    [Property]
+    var TheLauncherPath : CogPath;
+    var TheLauncher : BlockLauncher;
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.TheLauncher = this.TheLauncherPath.DirectCog.BlockLauncher;
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+}

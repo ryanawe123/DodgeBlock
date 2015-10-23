@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "DodgeAccumlator",
+		uint64 ResourceId = 565ccef79f7b1d6b,
+	},
+},

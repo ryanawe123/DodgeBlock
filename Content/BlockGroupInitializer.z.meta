@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "BlockGroupInitializer",
+		uint64 ResourceId = 565b67a0283ec170,
+	},
+},
